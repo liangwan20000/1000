@@ -4,5 +4,9 @@ module.exports = {
     open: true, // 自动开启浏览器
     port: 10086, // 配置端口号
     host: '127.0.0.1' // IP地址
-  }
+  },
+  chainWebpack: config => {
+    // 修复HMR
+    config.resolve.symlinks(true);
+  },
 }
