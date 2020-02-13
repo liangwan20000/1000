@@ -23,4 +23,14 @@ const router = new VueRouter({
   routes
 })
 
+router.beforeEach((to, from, next) => {
+  // to: 去哪里
+  // from: 从哪里来
+  // next: 没有特殊情况该方法都要执行
+  //    next(false)   路由停止执行
+  //    next('/home') 要执行的具体路由
+  //    next()   当前路由没有阻拦继续执行
+  next()
+})
+
 export default router
