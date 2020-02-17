@@ -1,9 +1,40 @@
 <template>
   <el-container>
-    <el-aside width="200px">Aside</el-aside>
+    <el-aside :style="width">
+      <el-menu
+        background-color="#545c64"
+        text-color="#fff"
+        :collapse="menuCollapse"
+        :collapse-transition="false"
+        active-text-color="#ffd04b">
+        <el-menu-item index="1" :style="width">
+          <i class="el-icon-menu"></i>
+          <span slot="title">首页</span>
+        </el-menu-item>
+        <el-submenu index="2" :style="width">
+          <template slot="title">
+            <i class="el-icon-location"></i>
+            <span>内容管理</span>
+          </template>
+          <el-menu-item index="2-1">发布文章</el-menu-item>
+          <el-menu-item index="2-2">文章列表</el-menu-item>
+          <el-menu-item index="2-3">评论列表</el-menu-item>
+          <el-menu-item index="2-4">素材管理</el-menu-item>
+        </el-submenu>
+        <el-menu-item index="3" :style="width">
+          <i class="el-icon-menu"></i>
+          <span slot="title">粉丝管理</span>
+        </el-menu-item>
+        <el-menu-item index="4" :style="width">
+          <i class="el-icon-setting"></i>
+          <span slot="title">账户信息</span>
+        </el-menu-item>
+      </el-menu>
+    </el-aside>
     <el-container>
       <el-header>
         <div class="zuobian">
+          <i :class="menuCollapse? 'el-icon-s-unfold' : 'el-icon-s-fold'" style="font-size: 25px;cursor: pointer;vertical-align: middle;" @click="change"></i>
           <span>张浩学院</span>
         </div>
         <div class="youbian">
@@ -24,7 +55,7 @@
         </div>
       </el-header>
       <el-main>
-        Main
+        <router-view></router-view>
       </el-main>
     </el-container>
   </el-container>
@@ -32,7 +63,14 @@
 
 <script>
 export default {
-  name: "home",
+  name: 'Home',
+  data: function () {
+    return {
+      menuCollapse: false,
+      width: 'width: 200px',
+      icon: 'el-icon-s-fold'
+    }
+  },
   computed: {
     name: function () {
       return window.sessionStorage.getItem('name');
@@ -52,14 +90,22 @@ export default {
         window.sessionStorage.clear();
         // 跳转到登录页
         this.$router.push({
-          path: "/login"
+          path: '/login'
         })
       }).catch(() => {
         this.$message({
           type: 'info',
           message: '已取消退出'
-        });          
+        });
       });
+    },
+    change: function () {
+      // 控制导航菜单的展开与合并
+      this.menuCollapse = !this.menuCollapse;
+      // 控制导航菜单的宽度
+      this.width = this.menuCollapse ? 'width:65px' : 'width:200px';
+      // 控制图标切换
+      this.icon = this.menuCollapse ? 'el-icon-s-unfold' : 'el-icon-s-fold';
     }
   }
 };
