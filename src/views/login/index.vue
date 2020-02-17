@@ -83,11 +83,9 @@ export default {
           // 人机交互验证
           // 获得验证的密匙信息
           var result = await this.$axios.get(`/captchas/${this.loginForm.mobile}`).catch(err => { return new Error(err) });
-          console.log(result);
           // 解构出相关信息
           var { data } = result.data;
-          // 显示人机窗口
-          //请检测data的数据结构， 保证data.gt, data.challenge, data.success有值
+          // 请检测data的数据结构， 保证data.gt, data.challenge, data.success有值
           window.initGeetest({
             // 以下配置参数来自服务端 SDK
             gt: data.gt,
@@ -98,15 +96,15 @@ export default {
           }, (captchaObj) => {
             // 这里可以调用验证实例 captchaObj 的实例方法
             captchaObj.onReady(() => {
-              //验证码ready之后才能调用verify方法   显示验证码
-              captchaObj.verify(); //显示验证码
-              this.btnLoading = false; //关闭按钮的loading状态
+              // 验证码ready之后才能调用verify方法   显示验证码
+              captchaObj.verify(); // 显示验证码
+              this.btnLoading = false; // 关闭按钮的loading状态
               this.catDom = captchaObj; // 保存生成的人机交互窗口
             }).onSuccess(() => {
-              //your code 验证成功
+              // your code 验证成功
               this.loginAct();
-            }).onError((err) => {
-              //your code 验证失败
+            }).onError(() => {
+              // your code 验证失败
               this.$message.error('验证失败');
             })
           })
@@ -132,7 +130,7 @@ export default {
   }
 };
 </script>
-<style lang="less">
+<style lang="less" scoped>
   .login {
     height: 100%;
     background-color: lime;
@@ -152,11 +150,9 @@ export default {
         text-align: center;
         .el-form {
           width: 100%;
-          .el-form-item {
-            .el-form-item__content {
-              display: flex;
-              justify-content: space-around;
-            }
+          .checkbox /deep/ .el-form-item__content {
+            display: flex;
+            justify-content: space-around;
           }
         }
         img {
