@@ -11,7 +11,7 @@ const routes = [
   {
     path: '/login',
     name: 'login',
-    component: () => import('@/views/login')
+    component: () => import(/* webpackChunkName: "about" */ '@/views/login')
   },
   {
     path: '/home',
@@ -25,7 +25,17 @@ const routes = [
       {
         path: '/welcome',
         name: 'welcome',
-        component: () => import(/* webpackChunkName: "about" */ '@/views/welcome'),
+        component: () => import(/* webpackChunkName: "about" */ '@/views/welcome')
+      },
+      {
+        path: '/article',
+        name: 'article',
+        component: () => import(/* webpackChunkName: "about" */ '@/views/article')
+      },
+      {
+        path: '/articleadd',
+        name: 'articleadd',
+        component: () => import(/* webpackChunkName: "about" */ '@/views/articleadd')
       }
     ]
   }
@@ -35,13 +45,20 @@ const router = new VueRouter({
   routes
 })
 
-router.beforeEach((to, from, next) => {
+router.beforeEach((to, form, next) => {
   // to: 去哪里
-  // from: 从哪里来
+  // form: 从哪里来
   // next: 没有特殊情况该方法都要执行
   //    next(false)   路由停止执行
   //    next('/home') 要执行的具体路由
   //    next()   当前路由没有阻拦继续执行
+  var token = window.sessionStorage.getItem('token');
+  if (!token && to.path !== '/login') {
+    if (form.path === '/login') {
+      return next();
+    };
+    return next('/login')
+  };
   next()
 })
 

@@ -52,7 +52,7 @@ export default {
       btnLoading: false,
       // 表单对象
       loginForm: {
-        mobile: '13111111111',
+        mobile: '13911111111',
         code: '246810',
         xieyi: true
       },
