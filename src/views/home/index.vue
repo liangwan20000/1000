@@ -1,5 +1,5 @@
 <template>
-  <el-container>
+  <el-container style="min-width: 998px;">
     <el-aside :style="width">
       <el-menu
         background-color="#545c64"
@@ -20,13 +20,13 @@
           <el-menu-item index="/articleadd">发布文章</el-menu-item>
           <el-menu-item index="/article">文章列表</el-menu-item>
           <el-menu-item index="2-3">评论列表</el-menu-item>
-          <el-menu-item index="2-4">素材管理</el-menu-item>
+          <el-menu-item index="/material">素材管理</el-menu-item>
         </el-submenu>
-        <el-menu-item index="3" :style="width">
+        <el-menu-item index="/fans" :style="width">
           <i class="el-icon-menu"></i>
           <span slot="title">粉丝管理</span>
         </el-menu-item>
-        <el-menu-item index="4" :style="width">
+        <el-menu-item index="/account" :style="width">
           <i class="el-icon-setting"></i>
           <span slot="title">账户信息</span>
         </el-menu-item>
@@ -44,7 +44,7 @@
           <el-dropdown trigger="click">
             <span class="el-dropdown-link">
               <img :src="photo" alt="">
-              {{ name }}
+              <span>{{ name }}</span>
               <i class="el-icon-arrow-down el-icon--right"></i>
             </span>
             <el-dropdown-menu slot="dropdown">
@@ -74,10 +74,12 @@ export default {
   },
   computed: {
     name: function () {
-      return window.sessionStorage.getItem('name');
+      return this.$store.state.name;
+      // return window.sessionStorage.getItem('name');
     },
     photo: function () {
-      return window.sessionStorage.getItem('photo');
+      return this.$store.state.photo;
+      // return window.sessionStorage.getItem('photo');
     }
   },
   methods: {
@@ -88,7 +90,8 @@ export default {
         type: 'warning'
       }).then(() => {
         // 清除sessionStorage
-        window.sessionStorage.clear();
+        // window.sessionStorage.clear();
+        this.$store.commit('clearStore');
         // 跳转到登录页
         this.$router.push({
           path: '/login'
@@ -132,10 +135,8 @@ export default {
         .el-input {
           width: 50%;
         }
-        span {
-          margin: 0 10px;
-        }
         .el-dropdown {
+          // width: 20%;
           img {
              width: 40px;
              height: 40px;
@@ -144,6 +145,11 @@ export default {
           }
         }
       }
+    }
+    .youbian > span {
+      display: inline-block;
+      width: 12%;
+      text-align: center;
     }
     .el-aside {
       background-color: #323745;

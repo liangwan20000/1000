@@ -4,10 +4,8 @@ import router from './router'
 import store from './store'
 // 引入全局样式文件
 import '@/assets/css/global.css'
-import ElementUI from 'element-ui'
 import '@/utils/axios'
-
-Vue.use(ElementUI)
+import '@/utils/elementui'
 
 Vue.config.productionTip = false
 

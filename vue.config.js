@@ -9,4 +9,14 @@ module.exports = {
     // 修复HMR
     config.resolve.symlinks(true);
   },
+  configureWebpack: config => {
+    config.externals = {
+      vue: 'Vue',
+      axios: 'axios',
+      'vue-router': 'VueRouter',
+      echarts: 'echarts',
+      nprogress: 'NProgress',
+      vuex: 'Vuex'
+    }
+  }
 }

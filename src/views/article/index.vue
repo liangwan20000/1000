@@ -65,7 +65,7 @@
         </el-table-column>
         <el-table-column prop="address" label="操作" align="center">
           <template slot-scope="stData">
-            <el-button type="primary" size="mini">修改</el-button>
+            <el-button type="primary" size="mini" @click="edit(stData.row.id)">修改</el-button>
             <el-button type="danger" size="mini" @click="del(stData.row.id)">删除</el-button>
           </template>
         </el-table-column>
@@ -99,6 +99,12 @@ export default {
     this.getArticleList();
   },
   methods: {
+    // 修改文章
+    edit: function (id) {
+      this.$router.push({
+        path: `/articleedit/${id}` // 动态路由
+      })
+    },
     // 删除文章
     del: async function (id) {
       var data = await this.$confirm('确定要删除该文章吗？', '删除', {

@@ -1,5 +1,7 @@
 import Vue from 'vue'
 import VueRouter from 'vue-router'
+import Nprogress from 'nprogress'
+import 'nprogress/nprogress.css'
 
 Vue.use(VueRouter)
 
@@ -36,6 +38,26 @@ const routes = [
         path: '/articleadd',
         name: 'articleadd',
         component: () => import(/* webpackChunkName: "about" */ '@/views/articleadd')
+      },
+      {
+        path: '/articleedit/:aid',
+        name: 'articleedit',
+        component: () => import(/* webpackChunkName: "about" */ '@/views/articleedit')
+      },
+      {
+        path: '/account',
+        name: 'account',
+        component: () => import(/* webpackChunkName: "about" */ '@/views/account')
+      },
+      {
+        path: '/material',
+        name: 'material',
+        component: () => import(/* webpackChunkName: "about" */ '@/views/material')
+      },
+      {
+        path: '/fans',
+        name: 'fans',
+        component: () => import(/* webpackChunkName: "about" */ '@/views/fans')
       }
     ]
   }
@@ -46,6 +68,7 @@ const router = new VueRouter({
 })
 
 router.beforeEach((to, form, next) => {
+  Nprogress.set(0.4);
   // to: 去哪里
   // form: 从哪里来
   // next: 没有特殊情况该方法都要执行
@@ -60,6 +83,10 @@ router.beforeEach((to, form, next) => {
     return next('/login')
   };
   next()
+})
+
+router.afterEach((to, form, next) => {
+  Nprogress.done();
 })
 
 export default router

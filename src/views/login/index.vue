@@ -121,11 +121,13 @@ export default {
       if (status === 201) {
         // 登陆成功跳转页面
         this.$router.push({ path: 'home' })
+        var { name, token, photo } = result.data.data;
+        window.sessionStorage.setItem('token', token);
+        // window.sessionStorage.setItem('name', name);
+        // window.sessionStorage.setItem('photo', photo);
+        this.$store.commit('upName', name);
+        this.$store.commit('upPhoto', photo);
       };
-      var { name, token, photo } = result.data.data;
-      window.sessionStorage.setItem('name', name);
-      window.sessionStorage.setItem('token', token);
-      window.sessionStorage.setItem('photo', photo);
     }
   }
 };
